@@ -1,10 +1,14 @@
+-- create database clinic booking
 create database clinic booking;
 use clinic booking;
+-- create table specialisation
+
 CREATE TABLE Specializations (
     specializationID INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL UNIQUE
 );
 
+-- create table doctors
 CREATE TABLE Doctors (
     doctorID INT AUTO_INCREMENT PRIMARY KEY,
     firstName VARCHAR(50) NOT NULL,
@@ -15,6 +19,8 @@ CREATE TABLE Doctors (
     FOREIGN KEY (specializationID) REFERENCES Specializations(specializationID)
 );
 
+--create table patients
+
 CREATE TABLE Patients (
     patientID INT AUTO_INCREMENT PRIMARY KEY,
     firstName VARCHAR(50) NOT NULL,
@@ -24,11 +30,15 @@ CREATE TABLE Patients (
     email VARCHAR(100) UNIQUE
 );
 
+--create table rooms
+
 CREATE TABLE Rooms (
     roomID INT AUTO_INCREMENT PRIMARY KEY,
     roomNumber VARCHAR(10) NOT NULL UNIQUE,
     type VARCHAR(50) NOT NULL
 );
+
+-- create table appointments
 
 CREATE TABLE Appointments (
     appointmentID INT AUTO_INCREMENT PRIMARY KEY,
@@ -41,6 +51,9 @@ CREATE TABLE Appointments (
     FOREIGN KEY (doctorID) REFERENCES Doctors(doctorID),
     FOREIGN KEY (roomID) REFERENCES Rooms(roomID)
 );
+
+-- create table prescription
+
 CREATE TABLE Prescriptions (
     prescriptionID INT AUTO_INCREMENT PRIMARY KEY,
     appointmentID INT NOT NULL,
@@ -50,6 +63,9 @@ CREATE TABLE Prescriptions (
     notes TEXT,
     FOREIGN KEY (appointmentID) REFERENCES Appointments(appointmentID)
 );
+
+--create table bills
+
 CREATE TABLE Bills (
     billID INT AUTO_INCREMENT PRIMARY KEY,
     appointmentID INT NOT NULL UNIQUE,
@@ -59,6 +75,9 @@ CREATE TABLE Bills (
     billingDate DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (appointmentID) REFERENCES Appointments(appointmentID)
 );
+
+--create table users
+
 CREATE TABLE Users (
     userID INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
