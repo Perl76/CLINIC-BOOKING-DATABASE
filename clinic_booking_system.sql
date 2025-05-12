@@ -41,3 +41,30 @@ CREATE TABLE Appointments (
     FOREIGN KEY (doctorID) REFERENCES Doctors(doctorID),
     FOREIGN KEY (roomID) REFERENCES Rooms(roomID)
 );
+CREATE TABLE Prescriptions (
+    prescriptionID INT AUTO_INCREMENT PRIMARY KEY,
+    appointmentID INT NOT NULL,
+    medicationName VARCHAR(100) NOT NULL,
+    dosage VARCHAR(50),
+    frequency VARCHAR(50),
+    notes TEXT,
+    FOREIGN KEY (appointmentID) REFERENCES Appointments(appointmentID)
+);
+CREATE TABLE Bills (
+    billID INT AUTO_INCREMENT PRIMARY KEY,
+    appointmentID INT NOT NULL UNIQUE,
+    amount DECIMAL(10,2) NOT NULL,
+    paymentStatus ENUM('Paid', 'Unpaid', 'Pending') DEFAULT 'Pending',
+    paymentMethod ENUM('Cash', 'Card', 'Insurance', 'Online'),
+    billingDate DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (appointmentID) REFERENCES Appointments(appointmentID)
+);
+CREATE TABLE Users (
+    userID INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    passwordHash VARCHAR(255) NOT NULL,
+    role ENUM('admin', 'doctor', 'patient') NOT NULL,
+    linkedID INT,
+    -- linkedID refers to doctorID or patientID based on role
+    UNIQUE (role, linkedID)
+);
