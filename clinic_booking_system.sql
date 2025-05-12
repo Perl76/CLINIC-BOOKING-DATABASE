@@ -1,5 +1,5 @@
-create database clinic bookig;
-use clinical booking;
+create database clinic booking;
+use clinic booking;
 CREATE TABLE Specializations (
     specializationID INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL UNIQUE
